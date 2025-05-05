@@ -4,6 +4,9 @@ const { log } = labeledLogger();
 
 // sort the array into `sorted` using side-effects
 const sortArray = (unsorted, sorted) => {
+  for (const item of unsorted) {
+    setTimeout(sorted.push(item), item.charCodeAt())
+  }
     // iterate through each item in the unsorted array
     //  for each item creat a timeout
     //    in the timeout callback, push the item into `sorted`

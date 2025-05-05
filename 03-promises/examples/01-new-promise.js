@@ -21,9 +21,9 @@ const executor = (resolve, reject) => {
 };
 
 const promise1 = new Promise(executor);
-log(promise1);
+log("1", promise1);
 const promise2 = new Promise(executor);
-log(promise2);
+log("2", promise2);
 
 log('= = = =  the call stack is empty  = = = =');
 
