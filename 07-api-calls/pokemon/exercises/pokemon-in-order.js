@@ -10,14 +10,13 @@ import { ORIGIN } from '../config.js';
  *
  * @throws {Error} HTTP error! status: {number}.
  */
-export const pokemonInOrder = async () => {
+export const pokemonInOrder = async (limit, offset) => {
     // --- generate and declare your resource's URL ---
     // docs: https://pokeapi.co/docs/v2#resource-listspagination-section
-    const URL = _;
 
-    // --- fetch the API data (this works!) ---
-    const encodedURL = encodeURI(URL);
-    const response = await fetch(encodedURL);
+    const URL = `https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`;
+
+    const response = await fetch(URL);
 
     // --- throw an error if the response is not ok (this works!) ---
     if (!response.ok) {
@@ -30,10 +29,9 @@ export const pokemonInOrder = async () => {
     /* --- parse the data if the response was ok (this works!) ---*/
     const data = await response.json();
 
-    // --- process the fetched data (if necessary) ---
-    //  you do not need to use `await` below this comment
-    //  you can refactor this to a separate logic function and test it
-    const pokemon = _;
+    console.log(data);
+
+    const pokemon = data.results;
 
     // --- return the final data ---
     return pokemon;

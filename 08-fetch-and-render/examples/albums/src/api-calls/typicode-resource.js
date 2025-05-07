@@ -15,6 +15,7 @@ export const typicodeResource = async (...params) => {
 
     const encodedURL = encodeURI(URL);
     const response = await fetch(encodedURL);
+    console.log(response);
 
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}\n-> ${URL}`);

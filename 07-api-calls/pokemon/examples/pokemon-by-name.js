@@ -16,12 +16,14 @@ const { log } = labeledLogger();
 const pokemonByName = async (name = '') => {
     // --- declare your resource's URL ---
     // docs: https://pokeapi.co/docs/v2#pokemon-section
-    const URL = `${ORIGIN}/pokemon/${name}`;
+    // const URL = `${ORIGIN}/pokemon/${name}`;
     log(URL);
+    log(`https://pokeapi.co/api/v2/${name}`);
 
     // --- fetch the API data (this works!) ---
     const encodedURL = encodeURI(URL);
-    const response = await fetch(encodedURL);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    // const response = await fetch(encodedURL);
 
     // --- throw an error if the response is not ok (this works!) ---
     if (!response.ok) {
