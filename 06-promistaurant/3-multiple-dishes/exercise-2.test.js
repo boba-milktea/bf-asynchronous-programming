@@ -35,9 +35,85 @@ import {
  *  Complete the following code so that the test passes
  */
 
-_;
+const preparedExtras = Promise.all(
+    [
+        extras.egg,
+        extras.redPepper,
+        extras.onion,
+        extras.pineapple,
+        extras.egg,
+        extras.mushrooms,
+        extras.pineapple,
+        extras.broccoli,
+    ].map((extra) => prepareExtra(extra)),
+);
 
-const theOrder = _;
+// Linda wants the following order:
+// *  A small portion of rice noodles with chicken and YouWok sauce with extra egg, red peppers and onion
+
+const lindaOrder = preparePortion(sizes.small, bases.riceNoodles)
+    .then((meal) => addVegetables(meal))
+    .then((meal) => addTopping(meal, toppings.chicken))
+    .then((meal) => addSauce(meal, sauces.youWok));
+
+// *  Monica wants the following order:
+// *  A medium portion of white rice with shrimps and soya sauce with extra pineapple.
+const monicaOrder = preparePortion(sizes.medium, bases.whiteRice)
+    .then((meal) => addVegetables(meal))
+    .then((meal) => addTopping(meal, toppings.shrimps))
+    .then((meal) => addSauce(meal, sauces.soya));
+
+// *  Nina wants the following order:
+// *  A large portion of rice noodles with calamari and sweet sour sauce without extras.
+const ninaOrder = preparePortion(sizes.large, bases.riceNoodles)
+    .then((meal) => addVegetables(meal))
+    .then((meal) => addTopping(meal, toppings.calamari))
+    .then((meal) => addSauce(meal, sauces.sweetSour));
+// .then((meal) => bag(meal));
+// *  Olivia wants the following order:
+// *  A large portion of rice noodles with calamari and thai sauce with extra egg, mushrooms, pineapple and broccoli.
+
+const oliviaOrder = preparePortion(sizes.large, bases.riceNoodles)
+    .then((meal) => addVegetables(meal))
+    .then((meal) => addTopping(meal, toppings.calamari))
+    .then((meal) => addSauce(meal, sauces.thai));
+
+const theOrder = Promise.all([
+    oliviaOrder,
+    monicaOrder,
+    lindaOrder,
+    preparedExtras,
+])
+    .then(
+        ([
+            oliviasMeal,
+            monicasMeal,
+            lindasMeal,
+            [
+                lindasEgg,
+                redPepper,
+                onion,
+                monicasPineapple,
+                oliviasEgg,
+                mushrooms,
+                oliviaPineapple,
+                broccoli,
+            ],
+        ]) =>
+            Promise.all([
+                addPreparedExtras(oliviasMeal, [
+                    oliviasEgg,
+                    mushrooms,
+                    oliviaPineapple,
+                    broccoli,
+                ]),
+                addPreparedExtras(monicasMeal, [monicasPineapple]),
+                addPreparedExtras(lindasMeal, [lindasEgg, redPepper, onion]),
+            ]),
+    )
+    .then(([oliviasMeal, monicasMeal, lindasMeal]) =>
+        Promise.all([bag(oliviasMeal), bag(monicasMeal), bag(lindasMeal)]),
+    );
 
 theOrder
     .then(([lindasMeal, monicasMeal, ninasMeal, oliviasMeal]) => {

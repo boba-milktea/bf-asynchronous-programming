@@ -9,7 +9,10 @@ const { log } = labeledLogger();
 /**
  *
  */
-const userWorksAt = () => {};
+const userWorksAt = (id = 1, company) =>
+    fetchUserById(id).then(
+        (user) => `${user.id}, ${user.company.name}` === `${id}, ${company}`,
+    );
 
 // --- test function ---
 
