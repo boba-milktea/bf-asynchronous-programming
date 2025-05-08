@@ -1,6 +1,5 @@
 import { typicode } from '../api-calls/typicode.js';
 import { renderUser } from '../components/renderUser.js';
-import { renderTodo } from '../components/renderTodo.js';
 import { dom } from '../dom.js';
 
 export const handleClick = async (e) => {
